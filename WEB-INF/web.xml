@@ -1,0 +1,18 @@
+<web-app>
+	<servlet>
+		<servlet-name>conversion</servlet-name>
+		<servlet-class>Completion</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>output</servlet-name>
+		<servlet-class>Query</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>conversion</servlet-name>
+		<url-pattern>/load</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>output</servlet-name>
+		<url-pattern>/send</url-pattern>
+	</servlet-mapping>
+</web-app>

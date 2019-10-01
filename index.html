@@ -1,0 +1,148 @@
+<html>
+<head>
+<link rel="icon" type="image/ico" href="elasticicon.png" />
+<title>Elastic search data operations</title>
+<link href='https://fonts.googleapis.com/css?family=Balthazar' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Sanchez' rel='stylesheet'>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script>
+function showResult(str) {
+  if (str.length==0) {
+    document.getElementById("livesearch").innerHTML="";
+    document.getElementById("livesearch").style.border="0px";
+    return;
+  }
+  if (window.XMLHttpRequest) {
+    xmlhttp=new XMLHttpRequest();
+  } 
+  else { 
+    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onreadystatechange=function() {
+    if (this.readyState==4 && this.status==200) {
+	  document.getElementById("json-datalist").innerHTML=this.responseText; 
+    }
+  }
+  xmlhttp.open("GET","load?q="+str,true);
+  xmlhttp.send();
+}
+</script>
+<style>
+body{
+	font-family:Balthazar;
+	font-size:20px;
+}
+.first{
+padding:10px;
+width:50%;
+}
+.second{
+border:2px solid black;
+width:100%;
+overflow:scroll;
+float:left;
+}
+li{
+float:left;
+}
+h5{
+color:Red;
+font-style:bold;
+}
+fieldset{
+width:100%;
+}
+p{
+	margin-left:20px;
+	padding:10px;
+	color:green;
+}
+div{
+width:550px;
+color:blue;
+}
+label{
+	font-family:Cursive;
+	margin-left:30px;
+	color:green;
+	font-size:18px;
+}
+input[type="text"]
+{
+	width:550px;
+	color:red;
+	margin-left:30px;
+	margin-top:30px;
+	font-family:Cursive;
+	font-size:15px;
+}
+</style>
+</head>
+<body>
+<label>Enter Query to Process  !</label>
+<form>
+<div class="form-group">
+	<input type="text" list="json-datalist" class="form-control" id="query" size="30" onkeyup="showResult(this.value)" placeholder="Enter Query Here">
+</div>
+<div class="form-group" style="margin-left:30px;">
+	<button type="button" class="btn btn-primary" onclick="load()">GET</button>
+</div>
+<datalist id="json-datalist"> 
+</datalist>
+</form>
+<h3>--------------------------------------------------------------------------------------------Output---------------------------------------------------------------------------------------------------</h3>
+	<div class="second" id="disp">
+		<center><h3 style="color:green">Demo Sql queries</h3><center>
+		<hr>
+		<h5>SELECT</h5>
+		<ul>
+			<li>select * from tablename</li></br>
+			<li>select * from tablename where condition</li></br>
+			<li>select columnname1,columnname2 from tablename</li></br>
+		</ul>
+		<hr>
+		<h5>UPDATE</h5>
+		<ul>
+			<li>update tablename set columname=value where condition</li></br>
+		</ul>
+		<hr>
+		<h5>DELETE</h5>
+		<ul>
+			<li>drop table tablename</li></br>
+			<li>delete from tablename</li></br>
+			<li>delete from tablename where condition</li></br>
+		</ul>
+		<hr>
+		<h5>INSERT</h5>
+		<ul>
+			<li>insert into tablename values (value1,value2,...)</li></br>
+			<li>insert into tablename (column1,column2,...) values (value1,value2,...)</li></br>
+			<li>insert into tablename (column1,column2,...) values (value1,value2,...),(value1,value2,...),...</li></br>
+		</ul>
+		<hr>
+		<h5>CREATE</h5>
+		<ul>
+			<li>create table tablename</li></br>
+			<li>create table tablename (column1 datatype,column2 datatype,..)</li></br>
+		</ul>
+		<hr>
+	</div>
+</body>
+<script>
+function load() 
+{
+  var query=document.getElementById("query").value;
+  var id="welcome";
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200){	
+     document.getElementById("disp").innerHTML = this.responseText;
+    }
+  };
+  xhttp.open("GET", "send?id="+query, true);
+  xhttp.send();
+}
+</script>
+</html>
